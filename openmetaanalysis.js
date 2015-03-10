@@ -1,5 +1,5 @@
 var n = location.pathname.indexOf("/",1);
-var sub_domain = window.location.split('.')[0].split('//')[1];
+var sub_domain = location.hostname.split('.').shift();
 if (n == 0){n = location.pathname.length};
 var pagename = location.pathname.split('/').slice(-1);
 if (pagename == ""){pagename = "index.html"};
