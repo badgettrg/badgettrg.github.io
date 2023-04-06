@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<title>title</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	<meta name="robots" content="index,follow" />
+	<link rel="stylesheet" type="text/css" href="styles.css" />
+<style>
+#wrapper {
+  margin-top: 100px;
+  margin-bottom: 100px;
+  margin-right: 150px;
+  margin-left: 20px;
+}
+</style>
+</head>
+
+<body>
+
+<div id="wrapper">
+<h1>Demonstration of using 'empty' EHR accounts</h1>
+
+<div>This is a demonstration of a select box in an EHR that is used for assignments of tasks.</div>
+<div>&nbsp;</div>
+
+<div>The accounts preceded by the asterisks in the demonstration below of a dropdown box are empty accounts
+<ul>
+<li>No user has credentials for authentication to the asterisked accounts.</li>
+<li>The tasks are completed by a pool or billers, front desk staff, nurses, etc who browse the inboxes of the empty accounts.</li>
+<li>These staff members who browse the inboxes for tasks to complete are logged in with their own, individual credentials that are unique</li>
+<li>The actions by the pools of staff are logged under the specific usernames of the individual staff members.</li>
+</li>
+</ul>
+</div>
+<div>&nbsp;</div>
+<div>Does this demonstration, if implemented, comply with: § 164.312(a)(2)(i) to “assign a unique name and/or number for identifying and tracking user identity.” (<a href="https://www.hhs.gov/hipaa/for-professionals/faq/2018/does-the-security-rule-permit-a-covered-entity-to-assign-the-same-log-on-id-to-multiple-employees/index.html">source</a>)</div>
+
+<div>&nbsp;</div>
+<div>&nbsp;</div>
+
+<div style="text-align:left">
+
+<form>
+
+<div>Who should this task be assigned to?</div>
+<select name="test"  size="10" id="test">
+  <option value="1">**Billing, task</option>
+  <option value="2">**Front desk, task</option>
+  <option value="3" selected>**Nurse, task</option>
+  <option value="4">**On call, task</option>
+  <option value="5">**Provider, task</option>
+  <option value="6">*Lab order, Outside</option>
+  <option value="7">Grey, Meredith</option>
+  <option value="8">House, Gregory</option>
+  <option value="9">McCoy, Bones</option>
+  <option value="10">Nightingale, Francis</option>
+  <option value="11">Osler, William</option>
+  <option value="12">Pierce, Hawkeye</option>
+  <option value="13">Röntgen, Wilhelm</option>
+</select>
+</form>
+
+</div> <!-- end of wrapper -->
+
+</body>
+</html>
