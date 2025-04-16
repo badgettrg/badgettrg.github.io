@@ -30,6 +30,14 @@ body, td {background-color: white;}
 	background-color: white;
 	font-size: 10px;
 }
+    .label {
+      display: inline-block;
+      width: 300px; /* Adjust this width to suit your content length */
+    }
+    .label2 {
+      display: inline-block;
+      width: 400px; /* Adjust this width to suit your content length */
+    }
 </style>
 </head>
 <body>
@@ -49,34 +57,46 @@ body, td {background-color: white;}
 <div class="" id="">&nbsp;</div>
 <h3>How much money has Senator John Doe received from political committees?</h3>
 <ul>
-	<li>2026: $1.3 million (28th percentile rank in amount given to a member of Congress)</li>
-	<li>2025: $0.9 million (23th percentile rank in amount given to a member of Congress)</li>
+	<li><span class="label">2026: $1.3 million</span>(28th percentile rank in amount given to a member of Congress)</li>
+	<li><span class="label">2025: $0.9 million</span>(23th percentile rank in amount given to a member of Congress)</li>
 </ul>
 
 <div class="" id="">&nbsp;</div>
 
 <h3>Which Policial Committees have directed to John Doe high percentages of their total donations to Congressional members?</h3>
 <ol>
-	<li>Organization Z: $500,000 (15% of total donations to Congressional members by this organization</li>
-	<li>Organization Y: $300,000 (10% of total donations to Congressional members by this organization</li>
+	<li><span class="label">Organization Z: $500,000</span>(15% of total donations to Congressional members by this organization</li>
+	<li><span class="label">Organization Y: $300,000</span>(10% of total donations to Congressional members by this organization</li>
 	<li>10 other organizations (show)</li>
 </ol>
 
 <div class="" id="">&nbsp;</div>
 
-<h3 style="color:gray">Which congressional votes by John Doe were unexpected and across all voters, including John Doe, an organization gave significantly different amounts to members after grouping members by their vote?</h3>
+<h3 style="color:lightgray">Which factors are associated with voting patterns by John Doe?</h3>
+  <ol>
+    <li><span class="label">Idealogy*: 60%</span>(mean rate of congress is 70%)</li>
+    <li><span class="label">Party affiliation: 20%</span>(mean rate of congress is 20%)</li>
+    <li><span class="label">Money received: 10%</span>(mean rate of congress is 5%)</li>
+    <li><span class="label">Other, unmeasurable factors: 10%</span>(mean rate of congress is 5%)</li>
+  </ol>
+  
+  <div class="" id="">* Idealogy is measured by the "DW-Nominate score" which reflects a member's position on the conservative-liberal spectrum (<a href="https://en.wikipedia.org/wiki/NOMINATE_(scaling_method)#Political_ideology">WikiPedia</a>).</div>
+
+<div class="" id="">&nbsp;</div>
+
+<h3 style="color:lightgray">Which congressional votes by John Doe were unexpected and across all voters, including John Doe, an organization gave significantly different amounts to members after grouping members by their vote?</h3>
 <div class="" id="">The following votes by John Doe were unexpected based on his prior votes and John Doe received money from an organization that gave members significantly different amounts of members after grouping members by their votes.</div>
 <ol>
-	<li>H.R.1118 - DISCLOSE Act of 2023 (<a href="javascript:alert('This bill addresses campaign finance, including by expanding the prohibition on campaign spending by foreign nationals, requiring additional disclosures of campaign expenditures, and requiring additional disclosures regarding certain political advertisements.')">summary from congress.gov</a>): Mean donations to given yes votes: $5000</li>
-	<li>H.R.123 - Demonstration Act of 2023 (<a href="javascript:alert('This bill addresses campaign finance, including by expanding the prohibition on campaign spending by foreign nationals, requiring additional disclosures of campaign expenditures, and requiring additional disclosures regarding certain political advertisements.')">summary from congress.gov</a>): Mean donations to no votes: $100
+	<li><span class="label3">H.R.1118 - DISCLOSE Act of 2023 (<a href="javascript:alert('This bill addresses campaign finance, including by expanding the prohibition on campaign spending by foreign nationals, requiring additional disclosures of campaign expenditures, and requiring additional disclosures regarding certain political advertisements.')">summary from congress.gov</a>)</span></span>Mean donations to given yes votes: $5000</li>
+	<li><span class="label3">H.R.123 - Demonstration Act of 2023 (<a href="javascript:alert('This bill addresses campaign finance, including by expanding the prohibition on campaign spending by foreign nationals, requiring additional disclosures of campaign expenditures, and requiring additional disclosures regarding certain political advertisements.')">summary from congress.gov</a>): </span>Mean donations to no votes: $100
 	<ul style="color:gray"><li>Number of unexpected No votes: 8 (23% of the No votes)</li></ul></li>
 </ol>
 
 <div class="" id="">The following votes had significantly more money received by congressional members who votied 'No'</div>
 <ol>
-	<li>H.R.456 - Demonstration Act of 2023 (<a href="javascript:alert('This bill addresses campaign finance, including by expanding the prohibition on campaign spending by foreign nationals, requiring additional disclosures of campaign expenditures, and requiring additional disclosures regarding certain political advertisements.')">summary from congress.gov</a>): Mean donations to given yes votes: $100
+	<li><span class="label3">H.R.456 - Demonstration Act of 2023s(<a href="javascript:alert('This bill addresses campaign finance, including by expanding the prohibition on campaign spending by foreign nationals, requiring additional disclosures of campaign expenditures, and requiring additional disclosures regarding certain political advertisements.')">summary from congress.gov</a>): </span>Mean donations to given yes votes: $100
 	<ul style="color:gray"><li>Number of unexpected Yes votes: 6 (20% of the Yes votes)</li></ul></li>
-	<li>H.R.789 - Demonstration Act of 2023 (<a href="javascript:alert('This bill addresses campaign finance, including by expanding the prohibition on campaign spending by foreign nationals, requiring additional disclosures of campaign expenditures, and requiring additional disclosures regarding certain political advertisements.')">summary from congress.gov</a>): Mean donations to no votes: $5000</li>
+	<li><span class="label3">H.R.789 - Demonstration Act of 2023 (<a href="javascript:alert('This bill addresses campaign finance, including by expanding the prohibition on campaign spending by foreign nationals, requiring additional disclosures of campaign expenditures, and requiring additional disclosures regarding certain political advertisements.')">summary from congress.gov</a>): </span>Mean donations to no votes: $5000</li>
 </ol>
 
 <div style="font-weight:bold">Details:</div>
