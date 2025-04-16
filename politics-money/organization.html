@@ -34,11 +34,16 @@ body, td {background-color: white;}
 <body>
 		
 <h1>Demonstration (simplified) of a proposed federal website after searching for Organization Z</h1>
+<div style="color:gray">Notes for this demonstration: gray text indicates content that may need more assessment of validity of calculation and acceptance of publicizing the data.</div>
+
+<div class="" id="">&nbsp;</div>
+
 <div style="font-weight:bold">Who is this website for?</div>
 <div>Anyone - a voter, a writer, a lobbyist, a researcher, a politician - who wants more information on the patterns associated with money given to members of Congress.</div>
 
 <div class="" id="">&nbsp;</div>
-<div>Results for your search for <input type="text" value="Organization Z"></input>.
+<div style="font-weight:bold">Your search results:</div>
+<div>Your search: <input type="text" value="Organization Z"></input>. Organizations matching: 1.
 
 <div class="" id="">&nbsp;</div>
 <h3>How much money has Organization Z given to members of Congress?</h3>
@@ -47,6 +52,8 @@ body, td {background-color: white;}
 	<li>2025: $0.9 million (43th percentile rank in amount given by an organization)</li>
 </ul>
 
+<div class="" id="">&nbsp;</div>
+
 <h3>Which members of Congress received the most money from Organization Z?</h3>
 <ol>
 	<li>Senator Smith: $500,000</li>
@@ -54,23 +61,40 @@ body, td {background-color: white;}
 	<li>10 other senators (show)</li>
 </ol>
 
-<h3>What congressional votes are associated with donations by Organization Z?</h3>
-<div class="" id="">The following votes had significantly more money received by congressional members who votied 'Aye'</div>
-<ul>
-	<li>H.R.1118 - DISCLOSE Act of 2023 (<a href="javascript:alert('This bill addresses campaign finance, including by expanding the prohibition on campaign spending by foreign nationals, requiring additional disclosures of campaign expenditures, and requiring additional disclosures regarding certain political advertisements.')">summary from congress.gov</a>): Mean donations to given yes votes: $5000</li>
-	<li>H.R.1118 - DISCLOSE Act of 2023 (<a href="javascript:alert('This bill addresses campaign finance, including by expanding the prohibition on campaign spending by foreign nationals, requiring additional disclosures of campaign expenditures, and requiring additional disclosures regarding certain political advertisements.')">summary from congress.gov</a>): Mean donations to no votes: $100</li>
-</ul>
-
 <div class="" id="">&nbsp;</div>
 
-<div class="" id="">The following votes had significantly more money received by congressional members who votied 'Nay'</div>
+<h3>Which congressional votes were associated with donations by Organization Z?</h3>
+<div class="" id="">The following votes had significantly more money received by congressional members who votied 'Yes'</div>
 <ol>
-	<li>H.R.1118 - DISCLOSE Act of 2023 (<a href="javascript:alert('This bill addresses campaign finance, including by expanding the prohibition on campaign spending by foreign nationals, requiring additional disclosures of campaign expenditures, and requiring additional disclosures regarding certain political advertisements.')">summary from congress.gov</a>): Mean donations to given yes votes: $100</li>
-	<li>H.R.1118 - DISCLOSE Act of 2023 (<a href="javascript:alert('This bill addresses campaign finance, including by expanding the prohibition on campaign spending by foreign nationals, requiring additional disclosures of campaign expenditures, and requiring additional disclosures regarding certain political advertisements.')">summary from congress.gov</a>): Mean donations to no votes: $5000</li>
+	<li>H.R.1118 - DISCLOSE Act of 2023 (<a href="javascript:alert('This bill addresses campaign finance, including by expanding the prohibition on campaign spending by foreign nationals, requiring additional disclosures of campaign expenditures, and requiring additional disclosures regarding certain political advertisements.')">summary from congress.gov</a>): Mean donations to given yes votes: $5000</li>
+	<li>H.R.123 - Demonstration Act of 2023 (<a href="javascript:alert('This bill addresses campaign finance, including by expanding the prohibition on campaign spending by foreign nationals, requiring additional disclosures of campaign expenditures, and requiring additional disclosures regarding certain political advertisements.')">summary from congress.gov</a>): Mean donations to no votes: $100
+	<ul style="color:gray"><li>Number of unexpected No votes: 8 (23% of the No votes)</li></ul></li>
+</ol>
+
+<div class="" id="">The following votes had significantly more money received by congressional members who votied 'No'</div>
+<ol>
+	<li>H.R.456 - Demonstration Act of 2023 (<a href="javascript:alert('This bill addresses campaign finance, including by expanding the prohibition on campaign spending by foreign nationals, requiring additional disclosures of campaign expenditures, and requiring additional disclosures regarding certain political advertisements.')">summary from congress.gov</a>): Mean donations to given yes votes: $100
+	<ul style="color:gray"><li>Number of unexpected Yes votes: 6 (20% of the Yes votes)</li></ul></li>
+	<li>H.R.789 - Demonstration Act of 2023 (<a href="javascript:alert('This bill addresses campaign finance, including by expanding the prohibition on campaign spending by foreign nationals, requiring additional disclosures of campaign expenditures, and requiring additional disclosures regarding certain political advertisements.')">summary from congress.gov</a>): Mean donations to no votes: $5000</li>
 </ol>
 
 <div style="font-weight:bold">Details:</div>
-<div>Associations are labeled significant if their occcurrence by chance less than 5%. This is after controlling for the Congress member's party affiliation or idealogy.</div>
+<div>Associations are labeled significant if their occcurrence by chance is less than 5%. This is after controlling for the Congress member's party affiliation or idealogy.</div>
+
+<div class="" id="">&nbsp;</div>
+
+<!--
+I do not think this is valid and doable.
+<h3>Rank of Organization Z for the association of its money given to voting patterns</h3>
+<ul>
+	<li>2026: 10th. Organization Z ranked 10th in the percent of variation in voting patterns associated with its donations. 9% of the variation in voting patterns were associated with the amount of money received by members in the votes</li>
+	<li>2026: 15th. Organization Z ranked 15th in the percent of variation in voting patterns associated with its donations. 7% of the variation in voting patterns were associated with the amount of money received by members in the votes</li>
+</ul>
+
+<div style="font-weight:bold">Details:</div>
+<div>ThiAssociations are labeled significant if their occcurrence by chance less than 5%. This is after controlling for the Congress member's party affiliation or idealogy.</div>
+
+-->
 
 <!--
 https://www.congress.gov/bill/118th-congress/house-bill/1118
