@@ -5,6 +5,14 @@
 	<meta charset="UTF-8">
 	<meta name="description" content="">
 </head>
+<style type="text/css">
+.td_data {
+  text-align: center;
+}
+tr {
+  border-bottom: 1px solid #ddd;
+}
+</style>
 <body>
 
 <h1>Demonstration of a website that fuses voting and donor records</h1>
@@ -14,13 +22,56 @@
 	<li><a href="donor.html">Donor - Political Committee or Organization</a></li>
 	<li><a href="member.html">Member of Congress</a></li>
 </ul>
-	
+
+<h2>Reporters and journalists may be an important group of users of this proposal.</h2>
+<table><thead>
+  <tr>
+    <th colspan="6">News articles from selected websites that cite one of these three websites of analyses of political data</th>
+  </tr></thead>
+<tbody>
+  <tr>
+    <td></td>
+    <td>Fox News<br/>(<a href="https://www.google.com/search?q=site:foxnews.com+AND+(%22voteview%22+OR+%22opensecrets%22+OR+%22govtrack%22)&tbm=nws&tbs=qdr:y" target="_blank" rel="noopener noreferrer">view</a>)</td>
+    <td>Wall Street Journal<br/>(<a href="https://www.google.com/search?q=site:wsj.com+AND+(%22voteview%22+OR+%22opensecrets%22+OR+%22govtrack%22)&tbm=nws&tbs=qdr:y" target="_blank" rel="noopener noreferrer">view</a>)</td>
+    <td>Washington Post<br/>(<a href="https://www.google.com/search?q=site:washingtonpost.com+AND+(%22voteview%22+OR+%22opensecrets%22+OR+%22govtrack%22)&tbm=nws&tbs=qdr:y" target="_blank" rel="noopener noreferrer">view</a>)</td>
+    <td>New York Times<br/>(<a href="https://www.google.com/search?q=site:nytimes.com+AND+(%22voteview%22+OR+%22opensecrets%22+OR+%22govtrack%22)&tbm=nws&tbs=qdr:y" target="_blank" rel="noopener noreferrer">view</a>)</td>
+    <td>Total<br/>(<a href="https://www.google.com/search?q=(site:foxnews.com+OR+site:wsj.com+OR+site:washingtonpost.com+OR+site:nytimes.com)+AND+(%22voteview%22+OR+%22opensecrets%22+OR+%22govtrack%22)&tbm=nws&tbs=qdr:y" target="_blank" rel="noopener noreferrer">view</a>)</td>
+  </tr>
+  <tr>
+    <td><a href="https://govtrack.us/" target="_blank" rel="noopener noreferrer">GovTrack.us</a><br>(many parameters other than financing)<br>(data downloads: NA)<br>(source: <a href="https://github.com/govtrack" target="_blank" rel="noopener noreferrer">github.com/govtrack</a>)</td>
+    <td class="td_data">4</td>
+    <td class="td_data">1</td>
+    <td class="td_data">2</td>
+    <td class="td_data">3</td>
+    <td class="td_data">10</td>
+  </tr>
+  <tr>
+    <td><a href="https://opensecrets.org/" target="_blank" rel="noopener noreferrer">OpenSecrets.org</a><br>(financing)<br>(data downloads: <a href="https://www.opensecrets.org/open-data/bulk-data" target="_blank" rel="noopener noreferrer">www.opensecrets.org/open-data/bulk-data</a><br>(source: <a href="https://github.com/opensecrets" target="_blank" rel="noopener noreferrer">github.com/opensecrets</a>)</td>
+    <td class="td_data">7</td>
+    <td class="td_data">16</td>
+    <td class="td_data">31</td>
+    <td class="td_data">55</td>
+    <td class="td_data">109</td>
+  </tr>
+  <tr>
+    <td><a href="https://voteview.com/" target="_blank" rel="noopener noreferrer">VoteView.com</a><br>(ideology and voting)<br>(data downloads: NA)<br>(source: <a href="https://github.com/voteview" target="_blank" rel="noopener noreferrer">github.com/voteview</a>)</td>
+    <td class="td_data">2</td>
+    <td class="td_data">0</td>
+    <td class="td_data">7</td>
+    <td class="td_data">1</td>
+    <td class="td_data">10</td>
+  </tr>
+  <tr>
+    <td colspan="6"><b>Notes</b>:<br>Results last updated: 2025-04-16.<br><br></td>
+  </tr>
+</tbody></table>
+
 <h2>References and examples</h2>
 <ul>
 	<li><a href="https://www.fec.gov/data/candidate/S4NJ00185/">FEC data for a candidate for re-election to Congress</a></li>
 	<li><a href="https://voteview.com/person/41308/cory-anthony-booker">VoteView data for expected vs actual votes by a member of Congress</a></li>
 </ul>
-	
+
 <div style='text-align:center'><a href="https://github.com/badgettrg">github.com/badgettrg</a> - <a href="https://scholar.google.com/citations?user=Sr-8DPoAAAAJ&hl=en">Scholar</a> - <a href="https://osf.io/gq9nt/">Open Science Framework</a> - <a href="https://www.ncbi.nlm.nih.gov/myncbi/robert.badgett.1/bibliography/public/">PubMed</a></div>
 <div>&nbsp;</div>
 <script>
