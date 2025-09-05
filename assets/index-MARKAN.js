@@ -99,8 +99,8 @@
       </label>
     </div>
   </div>
-  <div>The first three Gospels have darker gray headers to indicate they can be grouped as "Synoptic Gospels..."</div>
-  <div>Within the Markan priority, the role of Mark in the content of Matthew and Luke can be explained by the two-source or the Farrer hypothesis...</div>
+  <div>The first three Gospels have darker gray headers to indicate they can be grouped as "Synoptic Gospels because..."</div>
+  <div>Within the Markan priority, the role of Mark in the content of Matthew and Luke can be explained by either...</div>
 `;
 
     sectionOne.parentNode.insertBefore(chooser, sectionOne);
