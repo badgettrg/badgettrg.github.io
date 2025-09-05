@@ -55,7 +55,8 @@
       'This is a developmental website based on ' +
       '<a href="https://www.synopticus.org/en/ESV" target="_blank" ' +
       'style="color:red; font-style:italic; text-decoration:underline;">' +
-      'https://www.synopticus.org/en/ESV</a>';
+      'https://www.synopticus.org/en/ESV</a>.<br>' + 
+	  'This page is best viewed on a desktop browser';
 
     const synopsis = app.querySelector('h1.text-center.display-1');
     (synopsis?.parentNode || app).insertBefore(warning, synopsis || app.firstChild);
