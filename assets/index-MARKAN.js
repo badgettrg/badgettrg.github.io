@@ -1,8 +1,8 @@
-// index-MARKAN.js (v6)
+// index-MARKAN.js (v7) — place box *below* the nav/tabs
 (function () {
   const byId = (id) => document.getElementById(id);
 
-  // Lighten John's headers (no content changes)
+  // keep John's headers light
   function styleJohnHeadersLighterGray() {
     const headers = document.querySelectorAll(".john-header");
     headers.forEach((h) => {
@@ -15,45 +15,27 @@
 
   function populatePriorityBox(el) {
     el.id = "priority_box";
-
-    // Container: make sure it shows on mobile
     Object.assign(el.style, {
       backgroundColor: "#f0f0f0",
       border: "1px solid #ccc",
-      borderRadius: "8px",
-      padding: "1em",
-      margin: "1em auto",
-      maxWidth: "480px",
+      borderRadius: "12px",
+      padding: "1rem",
+      margin: "1rem auto",
+      maxWidth: "640px",
       textAlign: "left",
-      display: "block",          // force visible
-      visibility: "visible"      // force visible
     });
 
-    // Title
     const title = document.createElement("div");
-    Object.assign(title.style, {
-      textAlign: "center",
-      marginBottom: "0.5em",
-      fontWeight: "600"
-    });
+    Object.assign(title.style, { textAlign: "center", marginBottom: "0.5rem", fontWeight: "600" });
     title.textContent = "Priority:";
 
-    // Vertical radio options; force radios to be visible on iOS
-    const optWrap = document.createElement("div");
-    Object.assign(optWrap.style, {
-      display: "grid",
-      rowGap: "0.5em"
-    });
+    const wrap = document.createElement("div");
+    Object.assign(wrap.style, { display: "grid", rowGap: "0.5rem" });
 
     const mkOption = (id, label, checked) => {
       const row = document.createElement("label");
+      Object.assign(row.style, { display: "flex", alignItems: "center", gap: "0.6rem" });
       row.setAttribute("for", id);
-      Object.assign(row.style, {
-        display: "flex",
-        alignItems: "center",
-        gap: "0.6em",
-        lineHeight: "1.3"
-      });
 
       const input = document.createElement("input");
       input.type = "radio";
@@ -62,81 +44,88 @@
       input.value = label;
       if (checked) input.checked = true;
 
-      // iOS/Safari: fight global resets that hide radios
-      Object.assign(input.style, {
-        display: "inline-block",
-        visibility: "visible",
-        WebkitAppearance: "radio", // restore native radio on iOS
-        appearance: "auto",
-        width: "1rem",
-        height: "1rem",
-        flex: "0 0 auto"
-      });
+      // make sure iOS shows radios
+      Object.assign(input.style, { WebkitAppearance: "radio", appearance: "auto", width: "1rem", height: "1rem" });
 
-      const text = document.createElement("span");
-      text.textContent = label;
+      const span = document.createElement("span");
+      span.textContent = label;
 
       row.appendChild(input);
-      row.appendChild(text);
+      row.appendChild(span);
       return row;
     };
 
-    optWrap.appendChild(mkOption("matthean", "Matthean Priority", true));
-    optWrap.appendChild(mkOption("markan", "Markan Priority", false));
+    wrap.appendChild(mkOption("matthean", "Matthean Priority", true));
+    wrap.appendChild(mkOption("markan", "Markan Priority", false));
 
     el.appendChild(title);
-    el.appendChild(optWrap);
+    el.appendChild(wrap);
+  }
+
+  // Find best insertion anchor: prefer nav/tabs; else before first H1; else after dev warning; else end of #app
+  function insertAfterBestAnchor(node) {
+    const app = byId("app");
+    if (!app) return;
+
+    // 1) Any obvious nav/container for tabs?
+    const nav =
+      app.querySelector('nav, [role="navigation"], .navbar, .nav-tabs, .tabs, .topnav, header nav') ||
+      document.querySelector('nav, [role="navigation"], .navbar, .nav-tabs, .tabs, .topnav');
+
+    if (nav) {
+      nav.insertAdjacentElement("afterend", node);
+      return;
+    }
+
+    // 2) Before the first main H1 (so it sits above "Synopsis" heading but under other header chrome)
+    const h1 = app.querySelector("h1");
+    if (h1) {
+      h1.insertAdjacentElement("beforebegin", node);
+      return;
+    }
+
+    // 3) After dev warning if present
+    const dev = byId("dev_warning");
+    if (dev && dev.parentElement) {
+      dev.insertAdjacentElement("afterend", node);
+      return;
+    }
+
+    // 4) Fallback: end of #app
+    app.appendChild(node);
   }
 
   function ensurePriorityUI() {
     const app = byId("app");
     if (!app) return;
 
-    // Create the box if missing
     let box = byId("priority_box");
     if (!box) {
       box = document.createElement("div");
       populatePriorityBox(box);
-
-      // Place right below dev warning if present; otherwise at top of #app
-      const dev = byId("dev_warning");
-      if (dev && dev.parentElement === app) {
-        dev.insertAdjacentElement("afterend", box);
-      } else {
-        app.prepend(box);
-      }
+      insertAfterBestAnchor(box);
     } else if (box.childElementCount === 0) {
       populatePriorityBox(box);
     }
 
-    // Two explanatory divs below the box (create once)
+    // notes below the box
     if (!byId("synoptic_note")) {
-      const div1 = document.createElement("div");
-      div1.id = "synoptic_note";
-      Object.assign(div1.style, {
-        margin: "0.75em auto 0",
-        maxWidth: "60ch",
-        display: "block",
-        visibility: "visible"
-      });
-      div1.textContent =
+      const d1 = document.createElement("div");
+      d1.id = "synoptic_note";
+      Object.assign(d1.style, { margin: "0.75rem auto 0", maxWidth: "70ch" });
+      d1.textContent =
         "The first three Gospels have darker gray headers to indicate they can be grouped as 'Synoptic Gospels...'";
-      box.insertAdjacentElement("afterend", div1);
+      box.insertAdjacentElement("afterend", d1);
     }
 
     if (!byId("markan_note")) {
-      const div2 = document.createElement("div");
-      div2.id = "markan_note";
-      Object.assign(div2.style, {
-        margin: "0.5em auto 0",
-        maxWidth: "70ch",
-        display: "block",
-        visibility: "visible"
-      });
-      div2.textContent =
+      const d2 = document.createElement("div");
+      d2.id = "markan_note";
+      Object.assign(d2.style, { margin: "0.5rem auto 0", maxWidth: "75ch" });
+      d2.textContent =
         "Within the Markan priority, the role of Mark in the content of Matthew and Luke can be explained by the two-source or the Farrer hypothesis...";
       const after = byId("synoptic_note") || box;
-      after.insertAdjacentElement("afterend", div2);
+      after.insertAdjacentElement("afterend", d2);
     }
   }
 
