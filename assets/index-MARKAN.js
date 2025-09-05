@@ -1,136 +1,152 @@
-// index-MARKAN.js (v7) — place box *below* the nav/tabs
 (function () {
-  const byId = (id) => document.getElementById(id);
+  // --- 0) Inline CSS we’ll inject once; enabled by toggling a body class ---
+  const STYLE_ID = "markan-inline-style";
+  const STYLE_CSS = `
+    /* When body has .markan-priority, put Mark before Matthew */
+    body.markan-priority .row.content > .col-lg-3.col-md-12.pb-3:nth-of-type(1) { order: 2 !important; } /* Matthew -> 2nd */
+    body.markan-priority .row.content > .col-lg-3.col-md-12.pb-3:nth-of-type(2) { order: 1 !important; } /* Mark    -> 1st */
+    body.markan-priority .row.content > .col-lg-3.col-md-12.pb-3:nth-of-type(3) { order: 3 !important; }
+    body.markan-priority .row.content > .col-lg-3.col-md-12.pb-3:nth-of-type(4) { order: 4 !important; }
 
-  // keep John's headers light
-  function styleJohnHeadersLighterGray() {
-    const headers = document.querySelectorAll(".john-header");
-    headers.forEach((h) => {
-      if (!h.style.backgroundColor) h.style.backgroundColor = "#d3d3d3";
-      if (!h.style.padding) h.style.padding = "6px 10px";
-      if (!h.style.borderRadius) h.style.borderRadius = "4px";
-      if (!h.style.marginTop) h.style.marginTop = "1em";
-    });
+    /* Make John's headers lighter gray (target the 4th Gospel column we tag as .gospel-john) */
+    .gospel-john .section-header,
+    .gospel-john .card-header,
+    .gospel-john h2,
+    .gospel-john .header {
+      background-color: #eeeeee !important;
+      border-color: #dddddd !important;
+    }
+  `;
+
+  function ensureInlineStyle() {
+    if (document.getElementById(STYLE_ID)) return;
+    const style = document.createElement("style");
+    style.id = STYLE_ID;
+    style.type = "text/css";
+    style.appendChild(document.createTextNode(STYLE_CSS));
+    document.head.appendChild(style);
   }
 
-  function populatePriorityBox(el) {
-    el.id = "priority_box";
-    Object.assign(el.style, {
-      backgroundColor: "#f0f0f0",
-      border: "1px solid #ccc",
-      borderRadius: "12px",
-      padding: "1rem",
-      margin: "1rem auto",
-      maxWidth: "640px",
-      textAlign: "left",
-    });
-
-    const title = document.createElement("div");
-    Object.assign(title.style, { textAlign: "center", marginBottom: "0.5rem", fontWeight: "600" });
-    title.textContent = "Priority:";
-
-    const wrap = document.createElement("div");
-    Object.assign(wrap.style, { display: "grid", rowGap: "0.5rem" });
-
-    const mkOption = (id, label, checked) => {
-      const row = document.createElement("label");
-      Object.assign(row.style, { display: "flex", alignItems: "center", gap: "0.6rem" });
-      row.setAttribute("for", id);
-
-      const input = document.createElement("input");
-      input.type = "radio";
-      input.name = "priority";
-      input.id = id;
-      input.value = label;
-      if (checked) input.checked = true;
-
-      // make sure iOS shows radios
-      Object.assign(input.style, { WebkitAppearance: "radio", appearance: "auto", width: "1rem", height: "1rem" });
-
-      const span = document.createElement("span");
-      span.textContent = label;
-
-      row.appendChild(input);
-      row.appendChild(span);
-      return row;
-    };
-
-    wrap.appendChild(mkOption("matthean", "Matthean Priority", true));
-    wrap.appendChild(mkOption("markan", "Markan Priority", false));
-
-    el.appendChild(title);
-    el.appendChild(wrap);
+  // --- 1) Priority state + toggler (body class + localStorage) ---
+  function setPriority(value) {
+    const isMarkan = value === "markan";
+    document.body.classList.toggle("markan-priority", isMarkan);
+    localStorage.setItem("gospelPriority", isMarkan ? "markan" : "matthean");
+    const m1 = document.getElementById("priority_matthew");
+    const m2 = document.getElementById("priority_markan");
+    if (m1 && m2) {
+      m1.checked = !isMarkan;
+      m2.checked = isMarkan;
+    }
   }
 
-  // Find best insertion anchor: prefer nav/tabs; else before first H1; else after dev warning; else end of #app
-  function insertAfterBestAnchor(node) {
-    const app = byId("app");
+  // --- 2) Dev warning above H1 "Synopsis" ---
+  function ensureDevWarning() {
+    if (document.getElementById("dev_warning")) return;
+    const app = document.getElementById("app");
     if (!app) return;
 
-    // 1) Any obvious nav/container for tabs?
-    const nav =
-      app.querySelector('nav, [role="navigation"], .navbar, .nav-tabs, .tabs, .topnav, header nav') ||
-      document.querySelector('nav, [role="navigation"], .navbar, .nav-tabs, .tabs, .topnav');
+    const warning = document.createElement("div");
+    warning.id = "dev_warning";
+    warning.className = "text-center fs-3";
+    warning.style.color = "red";
+    warning.style.fontStyle = "italic";
+    warning.innerHTML =
+      'This is a developmental website based on ' +
+      '<a href="https://www.synopticus.org/en/ESV" target="_blank" ' +
+      'style="color:red; font-style:italic; text-decoration:underline;">' +
+      'https://www.synopticus.org/en/ESV</a>';
 
-    if (nav) {
-      nav.insertAdjacentElement("afterend", node);
-      return;
-    }
-
-    // 2) Before the first main H1 (so it sits above "Synopsis" heading but under other header chrome)
-    const h1 = app.querySelector("h1");
-    if (h1) {
-      h1.insertAdjacentElement("beforebegin", node);
-      return;
-    }
-
-    // 3) After dev warning if present
-    const dev = byId("dev_warning");
-    if (dev && dev.parentElement) {
-      dev.insertAdjacentElement("afterend", node);
-      return;
-    }
-
-    // 4) Fallback: end of #app
-    app.appendChild(node);
+    const synopsis = app.querySelector('h1.text-center.display-1');
+    (synopsis?.parentNode || app).insertBefore(warning, synopsis || app.firstChild);
   }
 
-  function ensurePriorityUI() {
-    const app = byId("app");
-    if (!app) return;
+  // --- 3) Priority chooser just BEFORE section with id="1" (Prologue block) ---
+  function ensurePriorityChooser() {
+    if (document.getElementById("priority_choice")) return;
 
-    let box = byId("priority_box");
-    if (!box) {
-      box = document.createElement("div");
-      populatePriorityBox(box);
-      insertAfterBestAnchor(box);
-    } else if (box.childElementCount === 0) {
-      populatePriorityBox(box);
-    }
+    const app = document.getElementById("app");
+    const sectionOne = document.getElementById("1");
+    if (!app || !sectionOne) return;
 
-    // notes below the box
-    if (!byId("synoptic_note")) {
-      const d1 = document.createElement("div");
-      d1.id = "synoptic_note";
-      Object.assign(d1.style, { margin: "0.75rem auto 0", maxWidth: "70ch" });
-      d1.textContent =
-        "The first three Gospels have darker gray headers to indicate they can be grouped as 'Synoptic Gospels...'";
-      box.insertAdjacentElement("afterend", d1);
-    }
+    const chooser = document.createElement("div");
+    chooser.id = "priority_choice";
+    chooser.className = "text-center";
+    chooser.style.fontSize = "14px";
+    chooser.innerHTML = `
+  <div style="margin-bottom:6px;">Select the Gospel priority:</div>
+  <div style="
+    display:inline-block;
+    border: 1px solid #ccc;   /* 👈 make this 'none' to hide */
+    border-radius: 6px;
+    padding: 10px 16px;
+    background-color: #f9f9f9;
+    text-align: left;
+  ">
+    <div class="form-check d-flex justify-content-center" style="margin-bottom:6px;">
+      <input class="form-check-input me-2" type="radio" name="gospelPriority"
+             id="priority_matthew" value="matthean" checked>
+      <label class="form-check-label" for="priority_matthew">
+        Matthean (default) — Matthew listed first
+      </label>
+    </div>
+    <div class="form-check d-flex justify-content-center">
+      <input class="form-check-input me-2" type="radio" name="gospelPriority"
+             id="priority_markan" value="markan">
+      <label class="form-check-label" for="priority_markan">
+        Markan — Mark listed first
+      </label>
+    </div>
+  </div>
+  <div>The first three Gospels have darker gray headers to indicate they can be grouped as "Synoptic Gospels..."</div>
+  <div>Within the Markan priority, the role of Mark in the content of Matthew and Luke can be explained by the two-source or the Farrer hypothesis...</div>
+`;
 
-    if (!byId("markan_note")) {
-      const d2 = document.createElement("div");
-      d2.id = "markan_note";
-      Object.assign(d2.style, { margin: "0.5rem auto 0", maxWidth: "75ch" });
-      d2.textContent =
-        "Within the Markan priority, the role of Mark in the content of Matthew and Luke can be explained by the two-source or the Farrer hypothesis...";
-      const after = byId("synoptic_note") || box;
-      after.insertAdjacentElement("afterend", d2);
+    sectionOne.parentNode.insertBefore(chooser, sectionOne);
+
+    chooser.addEventListener("change", (e) => {
+      if (e.target && e.target.name === "gospelPriority") {
+        setPriority(e.target.value);
+      }
+    });
+
+    const saved = localStorage.getItem("gospelPriority") || "matthean";
+    setPriority(saved);
+  }
+
+  // --- 3b) Tag John's column so we can safely style its headers
+  function tagJohnColumn() {
+    const row = document.querySelector('.row.content');
+    if (!row) return;
+    const cols = row.querySelectorAll('.col-lg-3.col-md-12.pb-3');
+    if (cols.length >= 4) {
+      cols.forEach(c => c.classList.remove('gospel-john'));
+      cols[3].classList.add('gospel-john'); // 4th column = John
     }
   }
 
-  document.addEventListener("DOMContentLoaded", () => {
-    styleJohnHeadersLighterGray();
-    ensurePriorityUI();
+  // --- 4) Orchestration ---
+  function tryInsertAll() {
+    ensureInlineStyle();
+    ensureDevWarning();
+    ensurePriorityChooser();
+    tagJohnColumn(); // ← add the marker class so the CSS applies
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", tryInsertAll);
+  } else {
+    tryInsertAll();
+  }
+
+  // Vue mounts late; watch briefly until elements appear, then stop
+  const obs = new MutationObserver(() => {
+    tryInsertAll();
+    if (document.getElementById("dev_warning") &&
+        document.getElementById("priority_choice")) {
+      obs.disconnect();
+    }
   });
+  obs.observe(document.body, { childList: true, subtree: true });
+  setTimeout(() => obs.disconnect(), 15000);
 })();
