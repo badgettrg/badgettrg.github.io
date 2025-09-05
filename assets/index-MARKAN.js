@@ -52,7 +52,7 @@
     warning.style.color = "red";
     warning.style.fontStyle = "italic";
     warning.innerHTML =
-      'This is a developmental website based on ' +
+      'This developmental website is based on ' +
       '<a href="https://www.synopticus.org/en/ESV" target="_blank" ' +
       'style="color:red; font-style:italic; text-decoration:underline;">' +
       'https://www.synopticus.org/en/ESV</a>.<br>' + 
