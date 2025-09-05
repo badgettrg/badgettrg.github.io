@@ -15,15 +15,9 @@ tr {
 </style>
 <body>
 
-<h1>Demonstration of a website that fuses voting and donor records</h1>
+<h1>Demonstration of how a website could fuse voting and donor records to identify dark money</h1>
 
-<div class="" id="">Examples of searching for</div>
-<ul>
-	<li><a href="donor.html">Donor - Political Committee or Organization</a></li>
-	<li><a href="member.html">Member of Congress</a></li>
-</ul>
-
-<h2>Reporters and journalists may be an important group of users of this proposal.</h2>
+<h2>Reporters and journalists are an important group of users of this proposal.</h2>
 <table><thead>
   <tr>
     <th colspan="6">News articles from selected websites that cite one of these three websites of analyses of political data</th>
@@ -33,6 +27,7 @@ tr {
     <td></td>
     <td>Fox News<br/>(<a href="https://www.google.com/search?q=site:foxnews.com+AND+(%22voteview%22+OR+%22opensecrets%22+OR+%22govtrack%22)&tbm=nws&tbs=qdr:y" target="_blank" rel="noopener noreferrer">view</a>)</td>
     <td>Wall Street Journal<br/>(<a href="https://www.google.com/search?q=site:wsj.com+AND+(%22voteview%22+OR+%22opensecrets%22+OR+%22govtrack%22)&tbm=nws&tbs=qdr:y" target="_blank" rel="noopener noreferrer">view</a>)</td>
+    <td>AP News<br/>(<a href="https://www.google.com/search?q=site:apnews.com+AND+(%22voteview%22+OR+%22opensecrets%22+OR+%22govtrack%22)&tbm=nws&tbs=qdr:y" target="_blank" rel="noopener noreferrer">view</a>)</td>
     <td>Washington Post<br/>(<a href="https://www.google.com/search?q=site:washingtonpost.com+AND+(%22voteview%22+OR+%22opensecrets%22+OR+%22govtrack%22)&tbm=nws&tbs=qdr:y" target="_blank" rel="noopener noreferrer">view</a>)</td>
     <td>New York Times<br/>(<a href="https://www.google.com/search?q=site:nytimes.com+AND+(%22voteview%22+OR+%22opensecrets%22+OR+%22govtrack%22)&tbm=nws&tbs=qdr:y" target="_blank" rel="noopener noreferrer">view</a>)</td>
     <td>Total<br/>(<a href="https://www.google.com/search?q=(site:foxnews.com+OR+site:wsj.com+OR+site:washingtonpost.com+OR+site:nytimes.com)+AND+(%22voteview%22+OR+%22opensecrets%22+OR+%22govtrack%22)&tbm=nws&tbs=qdr:y" target="_blank" rel="noopener noreferrer">view</a>)</td>
@@ -41,6 +36,7 @@ tr {
     <td><a href="https://govtrack.us/" target="_blank" rel="noopener noreferrer">GovTrack.us</a><br>(many parameters other than financing)<br>(data downloads: NA)<br>(source: <a href="https://github.com/govtrack" target="_blank" rel="noopener noreferrer">github.com/govtrack</a>)</td>
     <td class="td_data">5</td>
     <td class="td_data">1</td>
+    <td class="td_data">0</td>
     <td class="td_data">2</td>
     <td class="td_data">3</td>
     <td class="td_data">10</td>
@@ -49,6 +45,7 @@ tr {
     <td><a href="https://opensecrets.org/" target="_blank" rel="noopener noreferrer">OpenSecrets.org</a><br>(financing)<br>(data downloads: <a href="https://www.opensecrets.org/open-data/bulk-data" target="_blank" rel="noopener noreferrer">www.opensecrets.org/open-data/bulk-data</a><br>(source: <a href="https://github.com/opensecrets" target="_blank" rel="noopener noreferrer">github.com/opensecrets</a>)</td>
     <td class="td_data">7</td>
     <td class="td_data">16</td>
+    <td class="td_data">13</td>
     <td class="td_data">31</td>
     <td class="td_data">55</td>
     <td class="td_data">109</td>
@@ -57,6 +54,7 @@ tr {
     <td><a href="https://voteview.com/" target="_blank" rel="noopener noreferrer">VoteView.com</a><br>(ideology and voting)<br>(data downloads: NA)<br>(source: <a href="https://github.com/voteview" target="_blank" rel="noopener noreferrer">github.com/voteview</a>)</td>
     <td class="td_data">2</td>
     <td class="td_data">0</td>
+    <td class="td_data">0</td>
     <td class="td_data">7</td>
     <td class="td_data">1</td>
     <td class="td_data">10</td>
@@ -64,16 +62,40 @@ tr {
   <tr>
     <td colspan="6">
 	<b>Notes</b>:
-	    <div>Results last updated: 2025-04-16.</div>
-	    <div>Probably of randomly distributed citations is less than 0.001 (Chi-square).</div>
+	    <div>Results last updated: 2025-04-16, except AP News added 2025-06-28</div>
+	    <div>Probably of randomly distributed citations is less than 0.0001 (Fisher's Exact Test for Count Data, <a href="https://github.com/badgettrg/badgettrg.github.io/tree/master/politics-money/data%20and%20code">source code and data</a>).</div>
     </td>
   </tr>
 </tbody></table>
 
-<h2>References and examples</h2>
+<h2>Sources of publicaly available, but underused federal data</h2>
+<div>While this data is extensive, it is very hard to access, analyze, and interpret.</div>
 <ul>
-	<li><a href="https://www.fec.gov/data/candidate/S4NJ00185/">FEC data for a candidate for re-election to Congress</a></li>
-	<li><a href="https://voteview.com/person/41308/cory-anthony-booker">VoteView data for expected vs actual votes by a member of Congress</a></li>
+	<li><a href="https://www.fec.gov/data/candidate/S4NJ00185/">Federal Election Commission (FEC) financial data for an example candidate for re-election to Congress</a></li>
+	<li><a href="https://www.congress.gov/roll-call-votes">Congress.gov archives of vVoting records</a></li>
+</ul>
+
+<h2>Examples of improved displaying of federal data by nonfederal information providers</h2>
+<ul>
+	<li><a href="https://voteview.com/person/41308/cory-anthony-booker">VoteView data for expected vs actual votes by am example member of Congress</a></li>
+	<li><a href="https://www.opensecrets.org/members-of-congress/cory-booker/summary?cid=N00035267&cycle=2024&type=C">OpenSecrets data for an example member of Congress</a></li>
+</ul>
+
+<h2>Examples of using federal data <i>with insights by journalists or influencers</i></h2>
+<ul>
+	<li><a href="https://web.archive.org/web/20090626104519/http://www.fivethirtyeight.com/2009/06/special-interest-money-means-longer.html">A real example of insights from analyzing Congressional policy positions and their funding by Nate Silver of the fiverthirtyeight blog</a>
+	<ul><li>Note that this analysis correlated financing, not with voting record, but projected voting based on statements. The role of the journalist is essential in this analysis.</li></ul>
+	</li>
+	<li><a href="https://kffhealthnews.org/news/a-senator-from-arizona-emerges-as-a-pharma-favorite/">A real example of insights from analyzing a Congressional members policy position and here funding by KFF Health News</a>
+	<ul><li>Note that this analysis correlated financing, not with voting record, but projected voting based on statements. The role of the journalist is essential in this analysis.</li></ul>
+	</li>
+</ul>
+
+
+<h2>Proposed website: "wireframe" demonstrations of possible of searching for associations between donations received and voting records</h2>
+<ul>
+	<li><a href="donor.html">Donor - Political Committee or Organization</a></li>
+	<li><a href="member.html">Member of Congress</a></li>
 </ul>
 
 <div style='text-align:center'><a href="https://github.com/badgettrg">github.com/badgettrg</a> - <a href="https://scholar.google.com/citations?user=Sr-8DPoAAAAJ&hl=en">Scholar</a> - <a href="https://osf.io/gq9nt/">Open Science Framework</a> - <a href="https://www.ncbi.nlm.nih.gov/myncbi/robert.badgett.1/bibliography/public/">PubMed</a></div>
