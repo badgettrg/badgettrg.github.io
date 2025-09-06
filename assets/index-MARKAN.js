@@ -130,10 +130,10 @@
             </label>
           </div>
         </div>
-        <div id="synoptic_note" style="margin-top: 0.75rem; max-width: 70ch; margin-left:auto; margin-right:auto;">
+        <div id="synoptic_note" style="margin-top: 0.75rem; max-width: 100ch; margin-left:auto; margin-right:auto;">
           The first three Gospels have darker gray headers to indicate they can be grouped as "Synoptic Gospels because..."
         </div>
-        <div id="markan_note" style="margin-top: 0.5rem; max-width: 75ch; margin-left:auto; margin-right:auto;">
+        <div id="markan_note" style="margin-top: 0.5rem; max-width: 100ch; margin-left:auto; margin-right:auto;">
           Within the Markan priority, the role of Mark in the content of Matthew and Luke can be explained by either...
         </div>
       `;
