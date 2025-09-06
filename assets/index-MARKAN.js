@@ -1,52 +1,107 @@
-// index-MARKAN.js (v11) — place chooser before "I. Preface" and improve radio visibility
+// index-MARKAN.js (v16) — proof-of-life + robust placement
 (function () {
-  // --- Inline CSS (John headers + radio visibility) ---
+  // ---------- PROOF OF LIFE ----------
+  try {
+    console.log("[index-MARKAN.js] loaded v16");
+    // small visible ribbon in top-left so you KNOW this file executed
+    if (!document.getElementById("markan-proof")) {
+      const r = document.createElement("div");
+      r.id = "markan-proof";
+      r.textContent = "MARKAN JS v16";
+      Object.assign(r.style, {
+        position: "fixed",
+        left: "6px",
+        top: "6px",
+        zIndex: 2147483647,
+        background: "#19a974",
+        color: "white",
+        font: "12px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif",
+        padding: "2px 6px",
+        borderRadius: "4px",
+        boxShadow: "0 1px 3px rgba(0,0,0,.2)"
+      });
+      document.documentElement.appendChild(r);
+    }
+  } catch (e) {
+    // If even this fails, nothing beyond here will run
+  }
+
+  // ---------- Styles (John tint + radio visibility) ----------
   const STYLE_ID = "markan-inline-style";
   const STYLE_CSS = `
-    /* Optional Markan ordering via body class (kept for future use) */
-    body.markan-priority .row.content > .col-lg-3.col-md-12.pb-3:nth-of-type(1) { order: 2 !important; } /* Matthew -> 2nd */
-    body.markan-priority .row.content > .col-lg-3.col-md-12.pb-3:nth-of-type(2) { order: 1 !important; } /* Mark    -> 1st */
+    body.markan-priority .row.content > .col-lg-3.col-md-12.pb-3:nth-of-type(1) { order: 2 !important; }
+    body.markan-priority .row.content > .col-lg-3.col-md-12.pb-3:nth-of-type(2) { order: 1 !important; }
     body.markan-priority .row.content > .col-lg-3.col-md-12.pb-3:nth-of-type(3) { order: 3 !important; }
     body.markan-priority .row.content > .col-lg-3.col-md-12.pb-3:nth-of-type(4) { order: 4 !important; }
 
-    /* Make John's headers a lighter gray (applies to the column we tag as .gospel-john) */
     .gospel-john .section-header,
     .gospel-john .card-header,
+    .gospel-john .header,
     .gospel-john h2,
-    .gospel-john .header {
+    .gospel-john .bg-light,
+    .gospel-john .accordion-button,
+    .gospel-john .accordion-header .accordion-button {
       background-color: #eeeeee !important;
       border-color: #dddddd !important;
     }
+    .gospel-john .accordion {
+      --bs-accordion-btn-bg: #eeeeee;
+      --bs-accordion-border-color: #dddddd;
+      --bs-accordion-active-bg: #eeeeee;
+      --bs-accordion-btn-focus-box-shadow: none;
+    }
+    .gospel-john .card, .gospel-john .card-header { box-shadow: none !important; }
+    .gospel-john [class*="bg-"] { background-image: none !important; }
 
-    /* Radios inside our chooser: make UNSELECTED state more visible across browsers (incl. iOS) */
     #priority_choice input[type="radio"] {
-      -webkit-appearance: radio;
-      appearance: auto;
+      -webkit-appearance: radio; appearance: auto;
       transform: scale(1.20);
-      accent-color: #0d6efd;   /* supported by Safari/Chrome/Firefox */
-      outline: 1px solid #555; /* gives a darker ring even when not selected */
-      outline-offset: 1px;
-      opacity: 1;              /* avoid frameworks lowering opacity */
+      accent-color: #0d6efd;
+      outline: 1px solid #555; outline-offset: 1px; opacity: 1;
     }
-    #priority_choice input[type="radio"]:checked {
-      outline-color: #0d6efd;
-    }
+    #priority_choice input[type="radio"]:checked { outline-color: #0d6efd; }
   `;
-
   function ensureInlineStyle() {
     if (document.getElementById(STYLE_ID)) return;
     const style = document.createElement("style");
     style.id = STYLE_ID;
-    style.type = "text/css";
     style.appendChild(document.createTextNode(STYLE_CSS));
     document.head.appendChild(style);
   }
 
-  // --- Dev warning (unchanged text/link) ---
+  // ---------- Helpers ----------
+  const $ = (sel, root = document) => (root || document).querySelector(sel);
+  const byId = (id) => document.getElementById(id);
+
+  function getApp() {
+    return byId("app") || document.body || document.documentElement;
+  }
+
+  function findNavLike() {
+    const app = byId("app");
+    return (app && app.querySelector("nav, [role='navigation'], .navbar, .nav-tabs, .tabs"))
+        || $("header nav, header, nav, [role='navigation'], .navbar, .nav-tabs, .tabs");
+  }
+
+  function findPrefaceAnchor() {
+    const app = byId("app");
+    if (!app) return null;
+    const nodes = app.querySelectorAll("h1, h2, h3, .section-header, .card-header, .header");
+    for (const el of nodes) {
+      const t = (el.textContent || "").replace(/\s+/g, " ").trim();
+      if (/^I\.\s*Preface/i.test(t)) return el;
+    }
+    return null;
+  }
+
+  function findGridAnchor() {
+    return $(".row.content");
+  }
+
+  // ---------- Dev warning (unchanged text/link) ----------
   function ensureDevWarning() {
-    if (document.getElementById("dev_warning")) return;
-    const app = document.getElementById("app");
-    if (!app) return;
+    if (byId("dev_warning")) return;
+    const app = getApp();
 
     const warning = document.createElement("div");
     warning.id = "dev_warning";
@@ -60,108 +115,82 @@
       'https://www.synopticus.org/en/ESV</a>.<br>' +
       'This page is best viewed on a desktop browser';
 
-    const synopsis = document.querySelector('#app h1.text-center.display-1');
-    (synopsis?.parentNode || app).insertBefore(warning, synopsis || app.firstChild);
-  }
-
-  // --- Find the "I. Preface" anchor element ---
-  function findPrefaceAnchor() {
-    const app = document.getElementById("app");
-    if (!app) return null;
-
-    // Search common heading containers for text "I. Preface"
-    const candidates = app.querySelectorAll("h1, h2, h3, .section-header, .card-header, .header");
-    for (const el of candidates) {
-      const t = (el.textContent || "").replace(/\s+/g, " ").trim();
-      if (/^I\.\s*Preface/i.test(t)) return el;
+    const nav = findNavLike();
+    if (nav && nav.parentNode) {
+      nav.insertAdjacentElement("afterend", warning);
+    } else {
+      app.insertBefore(warning, app.firstChild);
     }
-    return null;
   }
 
-  // --- Priority state + toggler ---
+  // ---------- Priority state ----------
   function setPriority(value) {
     const isMarkan = value === "markan";
     document.body.classList.toggle("markan-priority", isMarkan);
     localStorage.setItem("gospelPriority", isMarkan ? "markan" : "matthean");
-    const m1 = document.getElementById("priority_matthew");
-    const m2 = document.getElementById("priority_markan");
-    if (m1 && m2) {
-      m1.checked = !isMarkan;
-      m2.checked = isMarkan;
-    }
+    const m1 = byId("priority_matthew");
+    const m2 = byId("priority_markan");
+    if (m1 && m2) { m1.checked = !isMarkan; m2.checked = isMarkan; }
   }
 
-  // --- Create/ensure chooser placed BEFORE "I. Preface" ---
+  // ---------- Chooser ----------
   function ensurePriorityChooser() {
-    const app = document.getElementById("app");
+    const app = getApp();
     const preface = findPrefaceAnchor();
-    if (!app || !preface) return;
+    const grid = findGridAnchor();
 
-    let chooser = document.getElementById("priority_choice");
+    const anchor = preface || grid || app.lastChild;
+
+    let chooser = byId("priority_choice");
     if (!chooser) {
       chooser = document.createElement("div");
       chooser.id = "priority_choice";
       chooser.className = "text-center";
       chooser.style.fontSize = "14px";
-      chooser.style.marginBottom = "0.75rem";
+      chooser.style.margin = "0 0 0.75rem 0";
       chooser.innerHTML = `
         <div style="margin-bottom:6px;">Select the Gospel priority:</div>
-        <div style="
-          display:inline-block;
-          border: 1px solid #ccc;   /* set to 'none' later to hide if desired */
-          border-radius: 8px;
-          padding: 12px 16px;
-          background-color: #f9f9f9;
-          text-align: left;
-        ">
+        <div style="display:inline-block;border:1px solid #ccc;border-radius:8px;padding:12px 16px;background:#f9f9f9;text-align:left;">
           <div class="form-check d-flex justify-content-center" style="margin-bottom:6px;">
-            <input class="form-check-input me-2" type="radio" name="gospelPriority"
-                   id="priority_matthew" value="matthean" checked>
-            <label class="form-check-label" for="priority_matthew">
-              Matthean (default) — Matthew listed first
-            </label>
+            <input class="form-check-input me-2" type="radio" name="gospelPriority" id="priority_matthew" value="matthean" checked>
+            <label class="form-check-label" for="priority_matthew">Matthean (default) — Matthew listed first</label>
           </div>
           <div class="form-check d-flex justify-content-center">
-            <input class="form-check-input me-2" type="radio" name="gospelPriority"
-                   id="priority_markan" value="markan">
+            <input class="form-check-input me-2" type="radio" name="gospelPriority" id="priority_markan" value="markan">
             <label class="form-check-label" for="priority_markan">
               Markan — Mark listed first allows observing the evolving descriptions of events
               as Mark was likely written first and John last...
             </label>
           </div>
         </div>
-        <div id="synoptic_note" style="margin-top: 0.75rem; max-width: 100ch; margin-left:auto; margin-right:auto;">
+        <div id="synoptic_note" style="margin-top:.75rem;max-width:100ch;margin-inline:auto;">
           The first three Gospels have darker gray headers to indicate they can be grouped as "Synoptic Gospels because..."
         </div>
-        <div id="markan_note" style="margin-top: 0.5rem; max-width: 100ch; margin-left:auto; margin-right:auto;">
+        <div id="markan_note" style="margin-top:.5rem;max-width:100ch;margin-inline:auto;">
           Within the Markan priority, the role of Mark in the content of Matthew and Luke can be explained by either...
         </div>
       `;
 
-      // Insert BEFORE "I. Preface"
-      preface.parentNode.insertBefore(chooser, preface);
+      if (anchor && anchor.parentNode) {
+        anchor.parentNode.insertBefore(chooser, anchor);
+      } else {
+        app.appendChild(chooser);
+      }
 
-      // Wire up
       chooser.addEventListener("change", (e) => {
-        if (e.target && e.target.name === "gospelPriority") {
-          setPriority(e.target.value);
-        }
+        if (e.target && e.target.name === "gospelPriority") setPriority(e.target.value);
       });
-
-      // Initialize from saved state
       setPriority(localStorage.getItem("gospelPriority") || "matthean");
     } else {
-      // If it already exists (from a prior render), ensure it sits before "I. Preface"
-      if (chooser.nextSibling !== preface) {
-        preface.parentNode.insertBefore(chooser, preface);
+      if (anchor && chooser.nextSibling !== anchor) {
+        anchor.parentNode.insertBefore(chooser, anchor);
       }
     }
   }
 
-  // --- Tag John's column (so lighter-gray styling applies) ---
+  // ---------- Tag John column ----------
   function tagJohnColumn() {
-    const row = document.querySelector(".row.content");
-    if (!row) return;
+    const row = document.querySelector(".row.content"); if (!row) return;
     const cols = row.querySelectorAll(".col-lg-3.col-md-12.pb-3");
     if (cols.length >= 4) {
       cols.forEach(c => c.classList.remove("gospel-john"));
@@ -169,29 +198,32 @@
     }
   }
 
-  // --- Orchestration ---
-  function runAll() {
-    ensureInlineStyle();
-    ensureDevWarning();
-    ensurePriorityChooser();
-    tagJohnColumn();
+  // ---------- Orchestrate & retry ----------
+  function step() {
+    try { ensureInlineStyle(); } catch {}
+    try { ensureDevWarning(); } catch {}
+    try { ensurePriorityChooser(); } catch {}
+    try { tagJohnColumn(); } catch {}
   }
 
+  // Run immediately, on DOM ready, and on load
+  step();
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", runAll);
-  } else {
-    runAll();
+    document.addEventListener("DOMContentLoaded", step, { once: true });
   }
+  window.addEventListener("load", step, { once: true });
 
-  // In case the app hydrates asynchronously, watch briefly and re-apply
-  const obs = new MutationObserver(() => {
-    runAll();
-    if (document.getElementById("dev_warning") &&
-        document.getElementById("priority_choice") &&
-        findPrefaceAnchor()) {
-      obs.disconnect();
+  // Retry a bit (for late hydration)
+  let tries = 0;
+  const maxTries = 80; // ~16s
+  const timer = setInterval(() => {
+    tries++;
+    step();
+    // stop early if we see the chooser and the dev warning
+    if (document.getElementById("dev_warning") && document.getElementById("priority_choice")) {
+      clearInterval(timer);
+    } else if (tries >= maxTries) {
+      clearInterval(timer);
     }
-  });
-  obs.observe(document.body, { childList: true, subtree: true });
-  setTimeout(() => obs.disconnect(), 15000);
+  }, 200);
 })();
