@@ -3,6 +3,13 @@
   // ---------- PROOF OF LIFE ----------
   try {
     console.log("[index-MARKAN.js] loaded v16");
+    // Apply saved priority immediately so refresh preserves state
+    const _saved = localStorage.getItem("gospelPriority");
+    if (_saved === "markan") {
+      document.body.classList.add("markan-priority");
+    } else if (_saved === "matthean") {
+      document.body.classList.remove("markan-priority");
+    }
     // (Removed green banner injection)
   } catch (e) {
     // If even this fails, nothing beyond here will run
@@ -89,13 +96,13 @@
     warning.id = "dev_warning";
     warning.className = "text-center fs-3";
     warning.style.color = "red";
-    warning.style.fontStyle = "normal";
+    warning.style.fontStyle = "italic";
     warning.innerHTML =
       'This developmental website is based on ' +
       '<a href="https://www.synopticus.org/en/ESV" target="_blank" ' +
-      'style="color:red; text-decoration:underline;">' +
+      'style="color:red; font-style:italic; text-decoration:underline;">' +
       'https://www.synopticus.org/en/ESV</a>.<br>' +
-      '<i>Best viewed on a desktop browser</i>';
+      'This page is best viewed on a desktop browser';
 
     const nav = findNavLike();
     if (nav && nav.parentNode) {
