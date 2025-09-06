@@ -167,9 +167,13 @@
         app.appendChild(chooser);
       }
 
-      chooser.addEventListener("change", (e) => {
+      // Save selection as soon as the radio is toggled (in addition to 'change')
+      const onPick = (e) => {
         if (e.target && e.target.name === "gospelPriority") setPriority(e.target.value);
-      });
+      };
+      chooser.addEventListener("input", onPick);   // <-- added
+      chooser.addEventListener("change", onPick);  // existing behavior
+
       let saved = null;
       try { saved = localStorage.getItem("gospelPriority"); } catch (_) {}
       setPriority(saved || "matthean");
