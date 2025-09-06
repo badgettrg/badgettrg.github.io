@@ -96,13 +96,13 @@
     warning.id = "dev_warning";
     warning.className = "text-center fs-3";
     warning.style.color = "red";
-    warning.style.fontStyle = "italic";
+    warning.style.fontStyle = "normal";
     warning.innerHTML =
       'This developmental website is based on ' +
       '<a href="https://www.synopticus.org/en/ESV" target="_blank" ' +
-      'style="color:red; font-style:italic; text-decoration:underline;">' +
-      'https://www.synopticus.org/en/ESV</a>.<br>' +
-      'This page is best viewed on a desktop browser';
+      'style="color:red; font-style:normal; text-decoration:underline;">' +
+      'https://www.synopticus.org/en/ESV</a>.<br><i>' +
+      'Best viewed on a desktop browser</i>';
 
     const nav = findNavLike();
     if (nav && nav.parentNode) {
