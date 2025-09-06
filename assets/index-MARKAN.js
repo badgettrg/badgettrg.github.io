@@ -3,25 +3,7 @@
   // ---------- PROOF OF LIFE ----------
   try {
     console.log("[index-MARKAN.js] loaded v16");
-    // small visible ribbon in top-left so you KNOW this file executed
-    if (!document.getElementById("markan-proof")) {
-      const r = document.createElement("div");
-      r.id = "markan-proof";
-      r.textContent = "MARKAN JS v16";
-      Object.assign(r.style, {
-        position: "fixed",
-        left: "6px",
-        top: "6px",
-        zIndex: 2147483647,
-        background: "#19a974",
-        color: "white",
-        font: "12px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif",
-        padding: "2px 6px",
-        borderRadius: "4px",
-        boxShadow: "0 1px 3px rgba(0,0,0,.2)"
-      });
-      document.documentElement.appendChild(r);
-    }
+    // (Removed green banner injection)
   } catch (e) {
     // If even this fails, nothing beyond here will run
   }
@@ -107,13 +89,13 @@
     warning.id = "dev_warning";
     warning.className = "text-center fs-3";
     warning.style.color = "red";
-    warning.style.fontStyle = "italic";
+    warning.style.fontStyle = "normal";
     warning.innerHTML =
       'This developmental website is based on ' +
       '<a href="https://www.synopticus.org/en/ESV" target="_blank" ' +
-      'style="color:red; font-style:italic; text-decoration:underline;">' +
+      'style="color:red; text-decoration:underline;">' +
       'https://www.synopticus.org/en/ESV</a>.<br>' +
-      'This page is best viewed on a desktop browser';
+      '<i>Best viewed on a desktop browser</i>';
 
     const nav = findNavLike();
     if (nav && nav.parentNode) {
