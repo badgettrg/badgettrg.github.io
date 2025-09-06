@@ -4,7 +4,8 @@
   try {
     console.log("[index-MARKAN.js] loaded v16");
     // Apply saved priority immediately so refresh preserves state
-    const _saved = localStorage.getItem("gospelPriority");
+    let _saved = null;
+    try { _saved = localStorage.getItem("gospelPriority"); } catch (_) {}
     if (_saved === "markan") {
       document.body.classList.add("markan-priority");
     } else if (_saved === "matthean") {
@@ -116,7 +117,7 @@
   function setPriority(value) {
     const isMarkan = value === "markan";
     document.body.classList.toggle("markan-priority", isMarkan);
-    localStorage.setItem("gospelPriority", isMarkan ? "markan" : "matthean");
+    try { localStorage.setItem("gospelPriority", isMarkan ? "markan" : "matthean"); } catch (_) {}
     const m1 = byId("priority_matthew");
     const m2 = byId("priority_markan");
     if (m1 && m2) { m1.checked = !isMarkan; m2.checked = isMarkan; }
@@ -169,7 +170,9 @@
       chooser.addEventListener("change", (e) => {
         if (e.target && e.target.name === "gospelPriority") setPriority(e.target.value);
       });
-      setPriority(localStorage.getItem("gospelPriority") || "matthean");
+      let saved = null;
+      try { saved = localStorage.getItem("gospelPriority"); } catch (_) {}
+      setPriority(saved || "matthean");
     } else {
       if (anchor && chooser.nextSibling !== anchor) {
         anchor.parentNode.insertBefore(chooser, anchor);
