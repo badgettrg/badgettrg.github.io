@@ -6,13 +6,6 @@
     // Apply saved priority immediately so refresh preserves state
     let _saved = null;
     try { _saved = localStorage.getItem("gospelPriority"); } catch (_) {}
-    // cookie fallback if needed
-    if (!_saved) {
-      try {
-        const m = document.cookie.match(/(?:^|;\s*)gospelPriority=([^;]+)/);
-        _saved = m ? decodeURIComponent(m[1]) : null;
-      } catch (_) {}
-    }
     if (_saved === "markan") {
       document.body.classList.add("markan-priority");
     } else if (_saved === "matthean") {
@@ -124,11 +117,7 @@
   function setPriority(value) {
     const isMarkan = value === "markan";
     document.body.classList.toggle("markan-priority", isMarkan);
-    // Save (localStorage + cookie fallback)
     try { localStorage.setItem("gospelPriority", isMarkan ? "markan" : "matthean"); } catch (_) {}
-    try {
-      document.cookie = "gospelPriority=" + encodeURIComponent(isMarkan ? "markan" : "matthean") + ";path=/;max-age=31536000";
-    } catch (_) {}
     const m1 = byId("priority_matthew");
     const m2 = byId("priority_markan");
     if (m1 && m2) { m1.checked = !isMarkan; m2.checked = isMarkan; }
@@ -178,20 +167,11 @@
         app.appendChild(chooser);
       }
 
-      const onPick = (e) => {
+      chooser.addEventListener("change", (e) => {
         if (e.target && e.target.name === "gospelPriority") setPriority(e.target.value);
-      };
-      chooser.addEventListener("input", onPick);
-      chooser.addEventListener("change", onPick);
-
+      });
       let saved = null;
       try { saved = localStorage.getItem("gospelPriority"); } catch (_) {}
-      if (!saved) {
-        try {
-          const m = document.cookie.match(/(?:^|;\s*)gospelPriority=([^;]+)/);
-          saved = m ? decodeURIComponent(m[1]) : null;
-        } catch (_) {}
-      }
       setPriority(saved || "matthean");
     } else {
       if (anchor && chooser.nextSibling !== anchor) {
@@ -238,4 +218,15 @@
       clearInterval(timer);
     }
   }, 200);
+
+  // ---------- Minimal addition: persist on page hide/unload ----------
+  function persistCurrentChoice() {
+    const sel = document.querySelector('input[name="gospelPriority"]:checked');
+    if (!sel) return;
+    const val = sel.value === "markan" ? "markan" : "matthean";
+    try { localStorage.setItem("gospelPriority", val); } catch (_) {}
+    try { document.cookie = "gospelPriority=" + encodeURIComponent(val) + ";path=/;max-age=31536000"; } catch (_) {}
+  }
+  window.addEventListener("pagehide", persistCurrentChoice, { passive: true });
+  window.addEventListener("beforeunload", persistCurrentChoice, { passive: true });
 })();
