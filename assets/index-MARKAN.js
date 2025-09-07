@@ -6,13 +6,6 @@
     // Apply saved priority immediately so refresh preserves state
     let _saved = null;
     try { _saved = localStorage.getItem("gospelPriority"); } catch (_) {}
-    // --- cookie fallback (added) ---
-    if (!_saved) {
-      try {
-        const m = document.cookie.match(/(?:^|;\s*)gospelPriority=([^;]+)/);
-        _saved = m ? decodeURIComponent(m[1]) : null;
-      } catch (_) {}
-    }
     if (_saved === "markan") {
       document.body.classList.add("markan-priority");
     } else if (_saved === "matthean") {
@@ -26,10 +19,10 @@
   // ---------- Styles (John tint + radio visibility) ----------
   const STYLE_ID = "markan-inline-style";
   const STYLE_CSS = `
-    body.markan-priority .row.content > .col-lg-3.col_md-12.pb-3:nth-of-type(1) { order: 2 !important; }
+    body.markan-priority .row.content > .col-lg-3.col-md-12.pb-3:nth-of-type(1) { order: 2 !important; }
     body.markan-priority .row.content > .col-lg-3.col-md-12.pb-3:nth-of-type(2) { order: 1 !important; }
     body.markan-priority .row.content > .col-lg-3.col-md-12.pb-3:nth-of-type(3) { order: 3 !important; }
-    body.markan-priority .row.content > .col-lg-3.col.md-12.pb-3:nth-of-type(4) { order: 4 !important; }
+    body.markan-priority .row.content > .col-lg-3.col-md-12.pb-3:nth-of-type(4) { order: 4 !important; }
 
     .gospel-john .section-header,
     .gospel-john .card-header,
@@ -130,6 +123,17 @@
     if (m1 && m2) { m1.checked = !isMarkan; m2.checked = isMarkan; }
   }
 
+  // --- NEW: keep radios in sync with <body> class (tiny helper) ---
+  function syncRadiosToBody() {
+    const isMarkan = document.body.classList.contains("markan-priority");
+    const m1 = byId("priority_matthew");
+    const m2 = byId("priority_markan");
+    if (m1 && m2) {
+      m1.checked = !isMarkan;
+      m2.checked = isMarkan;
+    }
+  }
+
   // ---------- Chooser ----------
   function ensurePriorityChooser() {
     const app = getApp();
@@ -177,20 +181,20 @@
       chooser.addEventListener("change", (e) => {
         if (e.target && e.target.name === "gospelPriority") setPriority(e.target.value);
       });
+
       let saved = null;
       try { saved = localStorage.getItem("gospelPriority"); } catch (_) {}
-      // --- cookie fallback (added) ---
-      if (!saved) {
-        try {
-          const m = document.cookie.match(/(?:^|;\s*)gospelPriority=([^;]+)/);
-          saved = m ? decodeURIComponent(m[1]) : null;
-        } catch (_) {}
-      }
       setPriority(saved || "matthean");
+
+      // --- NEW: force radios to match current body state on first render ---
+      syncRadiosToBody();
+
     } else {
       if (anchor && chooser.nextSibling !== anchor) {
         anchor.parentNode.insertBefore(chooser, anchor);
       }
+      // --- NEW: if chooser already exists, keep radios synced too ---
+      syncRadiosToBody();
     }
   }
 
