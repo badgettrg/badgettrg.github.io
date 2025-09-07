@@ -6,7 +6,7 @@
     // Apply saved priority immediately so refresh preserves state
     let _saved = null;
     try { _saved = localStorage.getItem("gospelPriority"); } catch (_) {}
-    // NEW: cookie fallback read
+    // --- cookie fallback (added) ---
     if (!_saved) {
       try {
         const m = document.cookie.match(/(?:^|;\s*)gospelPriority=([^;]+)/);
@@ -26,10 +26,10 @@
   // ---------- Styles (John tint + radio visibility) ----------
   const STYLE_ID = "markan-inline-style";
   const STYLE_CSS = `
-    body.markan-priority .row.content > .col-lg-3.col-md-12.pb-3:nth-of-type(1) { order: 2 !important; }
+    body.markan-priority .row.content > .col-lg-3.col_md-12.pb-3:nth-of-type(1) { order: 2 !important; }
     body.markan-priority .row.content > .col-lg-3.col-md-12.pb-3:nth-of-type(2) { order: 1 !important; }
     body.markan-priority .row.content > .col-lg-3.col-md-12.pb-3:nth-of-type(3) { order: 3 !important; }
-    body.markan-priority .row.content > .col-lg-3.col-md-12.pb-3:nth-of-type(4) { order: 4 !important; }
+    body.markan-priority .row.content > .col-lg-3.col.md-12.pb-3:nth-of-type(4) { order: 4 !important; }
 
     .gospel-john .section-header,
     .gospel-john .card-header,
@@ -125,8 +125,6 @@
     const isMarkan = value === "markan";
     document.body.classList.toggle("markan-priority", isMarkan);
     try { localStorage.setItem("gospelPriority", isMarkan ? "markan" : "matthean"); } catch (_) {}
-    // NEW: also persist to cookie
-    try { document.cookie = "gospelPriority=" + encodeURIComponent(isMarkan ? "markan" : "matthean") + "; path=/; max-age=31536000"; } catch (_) {}
     const m1 = byId("priority_matthew");
     const m2 = byId("priority_markan");
     if (m1 && m2) { m1.checked = !isMarkan; m2.checked = isMarkan; }
@@ -181,7 +179,7 @@
       });
       let saved = null;
       try { saved = localStorage.getItem("gospelPriority"); } catch (_) {}
-      // NEW: cookie fallback read
+      // --- cookie fallback (added) ---
       if (!saved) {
         try {
           const m = document.cookie.match(/(?:^|;\s*)gospelPriority=([^;]+)/);
