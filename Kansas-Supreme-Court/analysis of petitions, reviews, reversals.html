@@ -45,7 +45,16 @@
 </style>
 </head>
 <body>
-<h1>Kansas State Supreme Court</h1>
+<div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap;">
+  <h1 style="margin: 0;">Kansas Supreme Court</h1>
+  <div style="text-align: right;">
+    This document was last modified: <span id="modified.date"></span>
+  </div>
+</div>
+
+<script>
+document.getElementById("modified.date").innerHTML = document.lastModified;
+</script>
 
 <div>In Attorney General Kris Kobach's testimony of Feb 25, 2025 he stated</div>
 <ul>
@@ -97,5 +106,11 @@ Overturn rate (merits reversal rate) of petitions reviewed <span class="responsi
 <li>In this current analysis, all states include 47. New York, Pennsylvania, and Tennessee records have not yet been parsed from the  s available at <a href="https://supremecourt.gov/orders/journal.aspx">https://SupremeCourt.gov</a></li>
 <li>Analysis of cases chosen for review is from <a href="http://supremecourtdatabase.org/analysis.php">SupremeCourtDatabase.org</a> (hosted by <a href="https://washu.edu/">Washington University in St. Louis</a>. You may be alerted that your web connection to this site is not secure)</li>
 </ol>
+
+//For gh-pages
+//Page history and edit
+var pagename = "analysis of petitions, reviews, reversals.html";
+document.write("<div style='text-align:center'><a href='https://github.com/badgettrg/badgettrg.github.io/edit/master/Kansas-Supreme-Court/" + pagename + "'>Edit this page</a> - <a href='https://github.com/badgettrg/badgettrg.github.io/commits/master/Kansas-Supreme-Court/" + pagename + "''>Page history</a></div>")
+</script>
 </body>
 </html>
