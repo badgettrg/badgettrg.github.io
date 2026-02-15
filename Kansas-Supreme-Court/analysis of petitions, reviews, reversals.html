@@ -43,8 +43,13 @@
         font-size: 1em;
     }
 </style>
+<link rel="stylesheet" href="/include/includeHTML.css">
+<script src="/include/includeHTML.js"></script>
 </head>
 <body>
+
+<div w3-include-html="/include/menu.html"></div>
+	
 <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap;">
   <h1 style="margin: 0;">Kansas Supreme Court</h1>
   <div style="text-align: right;">
@@ -114,7 +119,14 @@ Overturn rate (merits reversal rate) of petitions reviewed <span class="responsi
 var pagename = "analysis of petitions, reviews, reversals.html";
 document.write("<div style='text-align:center'><a href='https://github.com/badgettrg/badgettrg.github.io/edit/master/Kansas-Supreme-Court/" + pagename + "'>Edit this page</a> - <a href='https://github.com/badgettrg/badgettrg.github.io/commits/master/Kansas-Supreme-Court/" + pagename + "''>Page history</a></div>")
 </script>
+
+<!-- per https://www.w3schools.com/howto/howto_html_include.asp -->
+<script>
+includeHTML();
+</script>
+
 </body>
 </html>
+
 
 
