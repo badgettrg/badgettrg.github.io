@@ -18,3 +18,18 @@
     This document was last modified: <span id="modified.date"></span>
   </div>
 </div>
+<script>
+//For gh-pages
+//Page history and edit
+var pagename = location.pathname.split('/').slice(-1);
+if (pagename.toString().length < 1){pagename = "index.html"}
+document.write("<div style='text-align:center'><a href='https://github.com/badgettrg/badgettrg.github.io/edit/master/politics/" + pagename + "'>Edit this page</a> - <a href='https://github.com/badgettrg/badgettrg.github.io/commits/master/politics/" + pagename + "''>Page history</a></div>")
+</script>
+
+<!-- per https://www.w3schools.com/howto/howto_html_include.asp -->
+<script>
+includeHTML();
+</script>
+	
+</body>
+</html>
